@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+  labels:
+    app: website
+spec:
+  selector:
+    matchLabels:
+      app: website
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      containers:
+      - name: website
+        image: nfacr.azurecr.io/website/website:v1
+        ports:
+        - containerPort: 80
