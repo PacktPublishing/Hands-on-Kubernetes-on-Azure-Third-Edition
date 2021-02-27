@@ -41,5 +41,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./Dockerfile
           push: false
           tags: nfacr.azurecr.io/website/website:${{ github.run_number }}
