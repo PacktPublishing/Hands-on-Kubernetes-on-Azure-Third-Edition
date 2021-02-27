@@ -46,7 +46,7 @@ jobs:
   CD:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
+    needs: CI
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Git checkout
@@ -65,4 +65,4 @@ jobs:
         run: kubectl get nodes
         
       - name: Helm upgrade
-        run: helm upgrade website --install --set image.repository=handsonakspipeline.azurecr.io/website/website --set image.tag=${{ github.run_number }
+        run: helm upgrade website --install --set image.repository=handsonakspipeline.azurecr.io/website/website --set image.tag=${{ github.run_number }}
