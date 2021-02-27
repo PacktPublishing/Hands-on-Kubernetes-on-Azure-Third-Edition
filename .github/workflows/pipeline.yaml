@@ -37,7 +37,6 @@ jobs:
       - name: Build and tag image
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./Chapter15/Dockerfile
+          context: ./Chapter15/
           push: false
           tags: nfacr.azurecr.io/website/website:${{ github.run_number }}
