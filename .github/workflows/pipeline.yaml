@@ -65,4 +65,7 @@ jobs:
         run: kubectl get nodes
         
       - name: Helm upgrade
-        run: helm upgrade website --install --set image.repository=handsonakspipeline.azurecr.io/website/website --set image.tag=${{ github.run_number }}
+        run: |
+          helm upgrade website Chapter15/website --install \
+            --set image.repository=handsonakspipeline.azurecr.io/website/website \
+            --set image.tag=${{ github.run_number }}
