@@ -41,4 +41,4 @@ jobs:
         with:
           context: ./Chapter15
           push: true
-          tags: nfacr.azurecr.io/website/website:${{ github.run_number }}
+          tags: handsonakspipeline.azurecr.io/website/website:${{ github.run_number }}
