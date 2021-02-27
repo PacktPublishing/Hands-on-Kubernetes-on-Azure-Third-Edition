@@ -8,7 +8,7 @@ on:
   push:
     branches: [ main ]
     paths: 
-    - Chapter15/*
+    - Chapter15/**
     - .github/workflows/pipeline.yaml
 
   # Allows you to run this workflow manually from the Actions tab
