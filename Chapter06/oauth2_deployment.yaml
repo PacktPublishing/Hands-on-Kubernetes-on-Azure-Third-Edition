@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oauth2-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        app: oauth2-proxy
+    spec:
+      containers:
+      - env:
+          - name: OAUTH2_PROXY_PROVIDER
+            value: azure
+          - name: OAUTH2_PROXY_AZURE_TENANT
+            value: 1cf4b872-ae04-44c8-8318-2ba43e95f591
+          - name: OAUTH2_PROXY_CLIENT_ID
+            value: 281cff0e-0240-4e9d-bb5e-0d984c646377
+          - name: OAUTH2_PROXY_CLIENT_SECRET
+            value: 4Qwh.6_yInw7-S0fc10P4-y2xTx5.eUb1y
+          - name: OAUTH2_PROXY_COOKIE_SECRET
+            value: somethingveryran
+          - name: OAUTH2_PROXY_HTTP_ADDRESS
+            value: "0.0.0.0:4180"
+          - name: OAUTH2_PROXY_UPSTREAM
+            value: "https://nf-aks-book.westus2.cloudapp.azure.com/"
+          - name: OAUTH2_PROXY_EMAIL_DOMAINS
+            value: '*'
+        image: quay.io/oauth2-proxy/oauth2-proxy:v6.1.1-amd64
+        imagePullPolicy: IfNotPresent
+        name: oauth2-proxy
+        ports:
+        - containerPort: 4180
+          protocol: TCP

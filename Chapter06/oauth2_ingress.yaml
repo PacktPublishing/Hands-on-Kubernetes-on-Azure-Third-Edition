@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth2-proxy-ingress
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    cert-manager.io/issuer: letsencrypt-prod
+    cert-manager.io/acme-challenge-type: http01
+spec:
+  tls:
+  - hosts:
+    - nf-aks-book.westus2.cloudapp.azure.com
+    secretName: tls-secret
+  rules:
+  - host: nf-aks-book.westus2.cloudapp.azure.com
+    http:
+      paths:
+      - path: /oauth2
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port: 
+              number: 4180
+      - path: /oauth2/auth
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port: 
+              number: 4180
+      - path: /oauth2/start
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port: 
+              number: 4180
+      - path: /oauth2/callback
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port: 
+              number: 4180

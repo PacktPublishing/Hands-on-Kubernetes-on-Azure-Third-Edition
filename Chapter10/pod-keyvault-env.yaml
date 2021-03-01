@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: csi-demo-env
+  labels:
+    aadpodidbinding: csi-to-key-vault
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    env:
+      - name: KEYVAULT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: key-vault-secret
+            key: secret-content
+    volumeMounts:
+      - name: keyvault
+        mountPath: /mnt/secrets-store
+        readOnly: true
+  volumes:
+    - name: keyvault
+      csi:
+        driver: secrets-store.csi.k8s.io
+        readOnly: true
+        volumeAttributes:
+          secretProviderClass: key-vault-secret-env
+  restartPolicy: Never

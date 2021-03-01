@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: host-volume
+  labels:
+    app: nginx-host-volume
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-host-volume
+  template:
+    metadata:
+      labels:
+        app: nginx-host-volume
+    spec:
+      containers:
+      - name: nginx-host-volume
+        image: nginx:alpine
+        volumeMounts:
+        - mountPath: /test-pd
+          name: test-volume
+          readOnly: true
+      volumes:
+      - name: test-volume
+        hostPath:
+          # Directory on host
+          path: /tmp

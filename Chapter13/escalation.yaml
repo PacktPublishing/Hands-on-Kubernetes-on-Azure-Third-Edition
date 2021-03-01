@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: escalation
+  labels:
+    app: nginx-escalation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-escalation
+  template:
+    metadata:
+      labels:
+        app: nginx-escalation
+    spec:
+      containers:
+      - name: nginx-escalation
+        image: nginx:alpine
+        securityContext:
+          privileged: true
+          allowPrivilegeEscalation: true

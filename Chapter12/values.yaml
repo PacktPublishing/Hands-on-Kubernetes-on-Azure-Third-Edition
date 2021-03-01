@@ -1,0 +1,22 @@
+azureTenantID: "<tenant ID>"
+azureSubscriptionID: "<subscription ID>"
+azureOperatorKeyvault: "<key vault name>"
+azureClientID: "<client ID>"
+
+
+cloudEnvironment: AzurePublicCloud
+azureUseMI: true
+image:
+  repository: mcr.microsoft.com/k8s/azureserviceoperator:0.1.16800
+installAadPodIdentity: true
+
+aad-pod-identity:
+  azureIdentityBinding:
+    name: aso-identity-binding
+    selector: aso_manager_binding
+  azureIdentity:
+    enabled: True
+    name: aso-identity
+    type: 0
+    resourceID: "<resource ID>"
+    clientID: "<client ID>"

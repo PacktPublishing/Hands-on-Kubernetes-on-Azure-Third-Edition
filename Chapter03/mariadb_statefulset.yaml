@@ -1,0 +1,139 @@
+1 apiVersion: apps/v1
+  2 kind: StatefulSet
+  3 metadata:
+  4   creationTimestamp: 2018-12-27T10:08:51Z
+  5   generation: 1
+  6   labels:
+  7     app: mariadb
+  8     chart: mariadb-5.2.5
+  9     component: master
+ 10     heritage: Tiller
+ 11     release: handsonaks-wp
+ 12   name: handsonaks-wp-mariadb
+ 13   namespace: default
+ 14   resourceVersion: "182595"
+ 15   selfLink: /apis/apps/v1/namespaces/default/statefulsets/handsonaks-wp-mariadb
+ 16   uid: 68a51584-09bf-11e9-9914-82000ff4ac53
+ 17 spec:
+ 18   podManagementPolicy: OrderedReady
+ 19   replicas: 1
+ 20   revisionHistoryLimit: 10
+ 21   selector:
+ 22     matchLabels:
+ 23       app: mariadb
+ 24       component: master
+ 25       release: handsonaks-wp
+ 26   serviceName: handsonaks-wp-mariadb
+ 27   template:
+ 28     metadata:
+ 29       creationTimestamp: null
+ 30       labels:
+ 31         app: mariadb
+ 32         chart: mariadb-5.2.5
+ 33         component: master
+ 34         release: handsonaks-wp
+ 35     spec:
+ 36       affinity:
+ 37         podAntiAffinity:
+ 38           preferredDuringSchedulingIgnoredDuringExecution:
+ 39           - podAffinityTerm:
+ 40               labelSelector:
+ 41                 matchLabels:
+ 42                   app: mariadb
+ 43                   release: handsonaks-wp
+ 44               topologyKey: Kubernetes .io/hostname
+ 45             weight: 1
+ 46       containers:
+ 47       - env:
+ 48         - name: MARIADB_ROOT_PASSWORD
+ 49           valueFrom:
+ 50             secretKeyRef:
+ 51               key: mariadb-root-password
+ 52               name: handsonaks-wp-mariadb
+ 53         - name: MARIADB_USER
+ 54           value: bn_wordpress
+ 55         - name: MARIADB_PASSWORD
+ 56           valueFrom:
+ 57             secretKeyRef:
+ 58               key: mariadb-password
+ 59               name: handsonaks-wp-mariadb
+ 60         - name: MARIADB_DATABASE
+ 61           value: bitnami_wordpress
+ 62         image: docker.io/bitnami/mariadb:10.1.37
+ 63         imagePullPolicy: IfNotPresent
+ 64         livenessProbe:
+ 65           exec:
+ 66             command:
+ 67             - sh
+ 68             - -c
+ 69             - exec mysqladmin status -uroot -p$MARIADB_ROOT_PASSWORD
+ 70           failureThreshold: 3
+ 71           initialDelaySeconds: 120
+ 72           periodSeconds: 10
+ 73           successThreshold: 1
+ 74           timeoutSeconds: 1
+ 75         name: mariadb
+ 76         ports:
+ 77         - containerPort: 3306
+ 78           name: mysql
+ 79           protocol: TCP
+ 80         readinessProbe:
+ 81           exec:
+ 82             command:
+ 83             - sh
+ 84             - -c
+ 85             - exec mysqladmin status -uroot -p$MARIADB_ROOT_PASSWORD
+ 86           failureThreshold: 3
+ 87           initialDelaySeconds: 30
+ 88           periodSeconds: 10
+ 89           successThreshold: 1
+ 90           timeoutSeconds: 1
+ 91         resources: {}
+ 92         terminationMessagePath: /dev/termination-log
+ 93         terminationMessagePolicy: File
+ 94         volumeMounts:
+ 95         - mountPath: /bitnami/mariadb
+ 96           name: data
+ 97         - mountPath: /opt/bitnami/mariadb/conf/my.cnf
+ 98           name: config
+ 99           subPath: my.cnf
+100       dnsPolicy: ClusterFirst
+101       restartPolicy: Always
+102       schedulerName: default-scheduler
+103       securityContext:
+104         fsGroup: 1001
+105         runAsUser: 1001
+106       terminationGracePeriodSeconds: 30
+107       volumes:
+108       - configMap:
+109           defaultMode: 420
+110           name: handsonaks-wp-mariadb
+111         name: config
+112   updateStrategy:
+113     type: RollingUpdate
+114   volumeClaimTemplates:
+115   - metadata:
+116       creationTimestamp: null
+117       labels:
+118         app: mariadb
+119         component: master
+120         heritage: Tiller
+121         release: handsonaks-wp
+122       name: data
+123     spec:
+124       accessModes:
+125       - ReadWriteOnce
+126       resources:
+127         requests:
+128           storage: 8Gi
+129     status:
+130       phase: Pending
+131 status:
+132   collisionCount: 0
+133   currentReplicas: 1
+134   currentRevision: handsonaks-wp-mariadb-544cbd7968
+135   observedGeneration: 1
+136   readyReplicas: 1
+137   replicas: 1
+138   updateRevision: handsonaks-wp-mariadb-544cbd7968
+139   updatedReplicas: 1

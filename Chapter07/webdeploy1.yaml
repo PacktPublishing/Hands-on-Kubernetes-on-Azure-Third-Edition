@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server1
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        server: server1
+  template:
+    metadata:
+      labels:
+        app: web-server
+        server: server1
+    spec:
+      containers:
+        - name: nginx-1
+          image: nginx:1.19.6-alpine
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /healthy.html
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          volumeMounts:
+            - name: html
+              mountPath: /usr/share/nginx/html
+            - name: index
+              mountPath: /tmp/index1.html
+              subPath: index1.html
+            - name: healthy
+              mountPath: /tmp/healthy.html
+              subPath: healthy.html
+          command: ["/bin/sh", "-c"]
+          args: ["cp /tmp/index1.html /usr/share/nginx/html/index.html; cp /tmp/healthy.html /usr/share/nginx/html/healthy.html; nginx; sleep inf"]
+      volumes:
+        - name: index
+          configMap:
+            name: server1
+        - name: healthy
+          configMap:
+            name: healthy
+        - name: html
+          emptyDir: {}

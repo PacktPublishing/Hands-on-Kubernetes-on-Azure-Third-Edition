@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-miner 
+  labels:
+    app: mining
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mining
+  template:
+    metadata:
+      labels:
+        app: mining
+    spec:
+      containers:
+      - name: mining
+        image: kannix/monero-miner:latest

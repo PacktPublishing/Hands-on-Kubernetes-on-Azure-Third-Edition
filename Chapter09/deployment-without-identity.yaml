@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-access-blob
+spec:
+  selector:
+    matchLabels:
+      app: no-access-blob
+  template:
+    metadata:
+      labels:
+        app: no-access-blob
+    spec:
+      containers:
+      - name: azure-cli
+        image: mcr.microsoft.com/azure-cli
+        command: [ "/bin/bash", "-c", "sleep inf" ]

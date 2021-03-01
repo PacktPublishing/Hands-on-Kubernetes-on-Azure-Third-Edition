@@ -1,0 +1,7 @@
+apiVersion: azure.microsoft.com/v1alpha1
+kind: MySQLDatabase
+metadata:
+  name: wordpress-db
+spec:
+  resourceGroup: aso-resources
+  server: <mysql-server-name>

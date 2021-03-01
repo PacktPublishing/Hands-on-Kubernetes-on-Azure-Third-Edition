@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-server-b
+  labels:
+    app: web-server
+    env: B
+spec:
+  containers:
+  - name: webserver
+    image: nginx:1.19.6-alpine

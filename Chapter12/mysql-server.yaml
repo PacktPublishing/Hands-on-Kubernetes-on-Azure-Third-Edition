@@ -1,0 +1,16 @@
+apiVersion: azure.microsoft.com/v1alpha1
+kind: MySQLServer
+metadata:
+  name: <mysql-server-name>
+spec:
+  location: westus2
+  resourceGroup: aso-resources
+  serverVersion: "8.0"
+  sslEnforcement: Disabled
+  createMode: Default 
+  sku:
+    name: B_Gen5_1 
+    tier: Basic 
+    family: Gen5
+    size: "5120"
+    capacity: 1

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-master-79bc96f6cf-cxgsd
+spec:
+  containers:
+    - name: basic
+      image: k8s.gcr.io/redis:e2e
