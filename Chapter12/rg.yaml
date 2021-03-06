@@ -3,4 +3,4 @@ kind: ResourceGroup
 metadata:
   name: aso-resources
 spec:
-  location: westus2
+  location: <cluster location>
