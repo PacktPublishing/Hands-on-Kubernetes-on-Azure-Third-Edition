@@ -3,7 +3,7 @@ kind: MySQLServer
 metadata:
   name: <mysql-server-name>
 spec:
-  location: westus2
+  location: <cluster location>
   resourceGroup: aso-resources
   serverVersion: "8.0"
   sslEnforcement: Disabled
