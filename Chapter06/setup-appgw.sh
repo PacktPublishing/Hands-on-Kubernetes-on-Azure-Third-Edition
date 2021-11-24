@@ -6,7 +6,7 @@ az group create -n agic -l westus2
 az network public-ip create -n agic-pip \
     -g agic --allocation-method Static --sku Standard \
     --dns-name "<your unique dns name>"
-az network vnet create -n agic-net -g agic \
+az network vnet create -n agic-vnet -g agic \
     --address-prefix 192.168.0.0/24 --subnet-name agic-subnet \
     --subnet-prefix 192.168.0.0/24
 
@@ -29,7 +29,7 @@ aksVnetId=$(az network vnet show -n $aksVnetName \
     -g $nodeResourceGroup -o tsv --query "id")
 az network vnet peering create \
     -n AppGWtoAKSVnetPeering -g agic \
-    --vnet-name agic-net --remote-vnet $aksVnetId \
+    --vnet-name agic-vnet --remote-vnet $aksVnetId \
     --allow-vnet-access
 
 appGWVnetId=$(az network vnet show -n agic-vnet \
