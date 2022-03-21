@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: shailendrahandsonkubernetesonazurethirdedition 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shailendrahandsonkubernetesonazurethirdedition
+  template:
+    metadata:
+      labels:
+        app: shailendrahandsonkubernetesonazurethirdedition 
+    spec:
+      containers:
+        - name: shailendrahandsonkubernetesonazurethirdedition 
+          image: successivetest.azurecr.io/shailendrahandsonkubernetesonazurethirdedition
+          ports:
+          - containerPort: 80
