@@ -12,9 +12,9 @@ az network vnet create -n agic-net -g agic \
 
 az network application-gateway create -n agic -l westus2 \
     -g agic --sku Standard_v2 --public-ip-address agic-pip \
-    --vnet-name agic-vnet --subnet agic-subnet
+    --vnet-name agic-vnet --subnet agic-subnet --priority 1000
 
-appgwId = $(az network application-gateway \
+appgwId=$(az network application-gateway \
     show -n agic -g agic -o tsv --query "id")
 az aks enable-addons -n handsonaks \
     -g rg-handsonaks -a ingress-appgw \
@@ -29,7 +29,7 @@ aksVnetId=$(az network vnet show -n $aksVnetName \
     -g $nodeResourceGroup -o tsv --query "id")
 az network vnet peering create \
     -n AppGWtoAKSVnetPeering -g agic \
-    --vnet-name agic-net --remove-vnet $aksVnetId \
+    --vnet-name agic-net --remote-vnet $aksVnetId \
     --allow-vnet-access
 
 appGWVnetId=$(az network vnet show -n agic-vnet \
