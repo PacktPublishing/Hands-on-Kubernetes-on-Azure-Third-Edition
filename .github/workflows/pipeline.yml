@@ -11,3 +11,27 @@ on:
     - .github/workflows/pipeline.yaml  
 # Allows you to run this workflow manually from the Actions tab
 workflow_dispatch:
+# Env to set reusable variables
+env:
+  ACRNAME: <acr-name>
+jobs:
+  # This workflow contains a single job called "CI"
+  CI:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Git checkout
+         uses: actions/checkout@v2
+      - name: az CLI login
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: ACR login
+          run: az acr login -n $ACRNAME
+      - name: Build and push image
+         uses: docker/build-push-action@v2
+         with:
+           context: ./Chapter15
+           push: true
+           tags: ${{ env.ACRNAME }}.azurecr.io/website/website:${{ github.run_number }}
