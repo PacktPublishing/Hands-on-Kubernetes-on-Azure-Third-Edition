@@ -5,7 +5,7 @@ metadata:
   labels:
     app: redis
 spec:
-  selector:
+  selector:  #specify the containers that this deployment will manage; and 3 labels must match the pods' labels
     matchLabels:
       app: redis
       role: master
