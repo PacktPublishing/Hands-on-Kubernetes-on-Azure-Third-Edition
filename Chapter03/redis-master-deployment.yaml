@@ -6,14 +6,14 @@ metadata:
     app: redis
 spec:
   selector:  #specify the containers that this deployment will manage; and 3 labels must match the pods' labels
-    matchLabels:
+    matchLabels: # match labels on line 16, why is this not default? Are you going to create orphan, unmanaged pods?
       app: redis
       role: master
       tier: backend
   replicas: 1
   template:
     metadata:
-      labels:
+      labels:  # add labels to pods
         app: redis
         role: master
         tier: backend
