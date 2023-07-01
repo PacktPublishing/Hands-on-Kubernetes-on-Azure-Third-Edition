@@ -41,5 +41,5 @@ spec:
           configMap:
             name: example-redis-config
             items:
-            - key: redis-config
+            - key: redis-config  # read in this key from the config file and output the value of the key in a file named radis.conf
               path: redis.conf
