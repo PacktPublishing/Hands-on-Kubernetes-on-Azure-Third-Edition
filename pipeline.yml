@@ -13,7 +13,7 @@ on:
  - workflow_dispatch:
 # Env to set reusable variables
 env:
-  ACRNAME: tobereplaced
+  ACRNAME: tobereplaced
 jobs:
   # This workflow contains a single job called "CI"
   CI:
@@ -24,13 +24,13 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v2
         
-      - name: az CLI login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: az CLI login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-      - name: az acr login
-        run: az acr login -n ${{ env.ACRNAME }}
+      - name: az acr login
+        run: az acr login -n ${{ env.ACRNAME }}
         
         
       - name: Build and push image
