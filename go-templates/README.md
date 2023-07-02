@@ -15,5 +15,5 @@ alias oc=kubectl
 oc get pods -o go-template='Hello, World!{{"\n"}}'
 oc get pods -o go-template='{{.apiVersion}}{{"\n"}}'
 oc get pods -o go-template='{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
-kubectl get pod -o  go-template-file=./go-templates/pod.modular.go.tpl 
+oc get pod -o  go-template-file=./go-templates/pod.modular.go.tpl 
 ```
